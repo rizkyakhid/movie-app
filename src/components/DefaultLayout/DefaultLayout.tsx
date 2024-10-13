@@ -22,7 +22,7 @@ export default function DefaultLayout({ children }: IDefaultLayoutProps) {
     <div className="relative flex">
       <div
         id="sidebar"
-        className="sticky left-0 top-0 h-screen shadow-md p-4 cursor-pointer flex flex-col gap-8"
+        className="sticky left-0 top-0 h-screen shadow-md w-48 p-4 cursor-pointer flex flex-col gap-8"
       >
         <div id="web-title">RIZ MOVIE APP</div>
 
@@ -35,7 +35,7 @@ export default function DefaultLayout({ children }: IDefaultLayoutProps) {
           ))}
         </div>
       </div>
-      <div id="body">
+      <div id="body" className="w-full">
         <div id="app-header" className="p-4 sticky top-0 flex gap-4">
           <span className="cursor-pointer">Movies</span>
           <span className="cursor-pointer">Series</span>
