@@ -24,12 +24,22 @@ export default function MovieList() {
     if (value > 0 && value < movieListData?.total_pages) {
       window.scrollTo(0, 0);
       setPage(value);
-      dispatch(
-        getMovieListData({
-          params: { page: value },
-          token: process.env.NEXT_PUBLIC_ACCESS_TOKEN,
-        })
-      );
+
+      if (searchValue?.length > 0) {
+        dispatch(
+          getSearchMovieListData({
+            params: { page: value, query: searchValue },
+            token: process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+          })
+        );
+      } else {
+        dispatch(
+          getMovieListData({
+            params: { page: value },
+            token: process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+          })
+        );
+      }
     }
   };
 
@@ -67,6 +77,7 @@ export default function MovieList() {
     <div id="container-movie-list" className="flex flex-col">
       <div className="p-8 sticky top-0 bg-gradient-to-b from-background to-transparent z-10">
         <Searchbar
+          value={searchValue}
           placeholder="Search movies here..."
           onChange={handleSearch}
         />

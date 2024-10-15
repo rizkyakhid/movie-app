@@ -4,11 +4,13 @@ import { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 
 interface ISearchbarProps {
+  value?: string;
   placeholder?: string;
   onChange?: (value: string) => void;
 }
 
 export default function Searchbar({
+  value,
   placeholder,
   onChange = () => null,
 }: ISearchbarProps) {
@@ -22,6 +24,7 @@ export default function Searchbar({
     >
       <input
         type="text"
+        value={value}
         placeholder={placeholder}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
