@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { AiFillStar, AiOutlineTeam } from "react-icons/ai";
 
 interface ICardProps {
@@ -16,7 +17,9 @@ export default function Card({ data, rating, popularity }: ICardProps) {
   return (
     <div className="shadow-lg rounded-lg p-4 flex flex-col gap-2 w-100 bg-background w-full flex-shrink-0 flex-grow hover:bg-purple-600 cursor-pointer justify-between">
       <div id="upper-section" className="flex flex-col gap-2">
-        <img
+        <Image
+          width={200}
+          height={300}
           src={`${process.env.NEXT_PUBLIC_MOVIEDB_IMG}${data.poster_path}`}
           alt=""
         />

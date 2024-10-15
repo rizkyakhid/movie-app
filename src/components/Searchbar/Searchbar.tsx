@@ -5,9 +5,13 @@ import { AiOutlineSearch } from "react-icons/ai";
 
 interface ISearchbarProps {
   placeholder?: string;
+  onChange?: (value: string) => void;
 }
 
-export default function Searchbar({ placeholder }: ISearchbarProps) {
+export default function Searchbar({
+  placeholder,
+  onChange = () => null,
+}: ISearchbarProps) {
   const [focus, setFocus] = useState(false);
   return (
     <div
@@ -22,6 +26,7 @@ export default function Searchbar({ placeholder }: ISearchbarProps) {
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
         className="bg-transparent w-full outline-none"
+        onChange={(e) => onChange(e?.target?.value)}
       />
       <AiOutlineSearch />
     </div>

@@ -4,7 +4,10 @@ import Card from "@/components/Card/Card";
 import CardLoading from "@/components/Card/CardLoading";
 import Pagination from "@/components/Pagination/Pagination";
 import Searchbar from "@/components/Searchbar/Searchbar";
-import { getMovieListData } from "@/features/MovieList/movieListSlice";
+import {
+  getMovieListData,
+  getSearchMovieListData,
+} from "@/features/MovieList/movieListSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { useEffect, useState } from "react";
@@ -30,6 +33,27 @@ export default function MovieList() {
     }
   };
 
+  const handleSearch = (inputValue: string) => {
+    setSearchValue(inputValue);
+    setPage(1);
+
+    if (inputValue?.length > 0) {
+      dispatch(
+        getSearchMovieListData({
+          params: { page: 1, query: inputValue },
+          token: process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        })
+      );
+    } else {
+      dispatch(
+        getMovieListData({
+          params: { page: 1 },
+          token: process.env.NEXT_PUBLIC_ACCESS_TOKEN,
+        })
+      );
+    }
+  };
+
   useEffect(() => {
     dispatch(
       getMovieListData({
@@ -42,7 +66,10 @@ export default function MovieList() {
   return (
     <div id="container-movie-list" className="flex flex-col">
       <div className="p-8 sticky top-0 bg-gradient-to-b from-background to-transparent z-10">
-        <Searchbar placeholder="Search movies here..." />
+        <Searchbar
+          placeholder="Search movies here..."
+          onChange={handleSearch}
+        />
       </div>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 px-8">
         {movieListLoading
