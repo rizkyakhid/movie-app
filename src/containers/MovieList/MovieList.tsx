@@ -2,6 +2,7 @@
 
 import Card from "@/components/Card/Card";
 import CardLoading from "@/components/Card/CardLoading";
+import Pagination from "@/components/Pagination/Pagination";
 import Searchbar from "@/components/Searchbar/Searchbar";
 import { getMovieListData } from "@/features/MovieList/movieListSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -17,7 +18,7 @@ export default function MovieList() {
   const [searchValue, setSearchValue] = useState("");
 
   const handlePagination = (value: number) => {
-    if (value > 1 && value < movieListData?.total_pages) {
+    if (value > 0 && value < movieListData?.total_pages) {
       window.scrollTo(0, 0);
       setPage(value);
       dispatch(
@@ -50,24 +51,12 @@ export default function MovieList() {
               <Card data={item} key={id} />
             ))}
       </div>
-      <div id="movie-list-pagination" className="p-8 flex gap-4 justify-end">
-        <span>{`Page ${page} of ${movieListData?.total_pages ?? page}`}</span>
-        <div
-          className={`${page === 1 ? "text-neutral-400" : "cursor-pointer"}`}
-          onClick={() => handlePagination(page - 1)}
-        >
-          PREV
-        </div>
-        <div
-          className={`${
-            page === movieListData?.total_pages
-              ? "text-neutral-400"
-              : "cursor-pointer"
-          }`}
-          onClick={() => handlePagination(page + 1)}
-        >
-          NEXT
-        </div>
+      <div className="p-8">
+        <Pagination
+          currentPage={page}
+          totalPages={movieListData?.total_pages}
+          handlePage={handlePagination}
+        />
       </div>
     </div>
   );

@@ -1,3 +1,6 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
 import {
   AiOutlineClockCircle,
@@ -13,11 +16,16 @@ interface IDefaultLayoutProps {
 
 export default function DefaultLayout({ children }: IDefaultLayoutProps) {
   const menu = [
-    { title: "Now Playing", icon: <AiOutlinePlaySquare /> },
-    { title: "Popular", icon: <AiOutlineTeam /> },
-    { title: "Top Rated", icon: <AiOutlineStar /> },
-    { title: "Upcoming", icon: <AiOutlineClockCircle /> },
+    {
+      title: "Now Playing",
+      icon: <AiOutlinePlaySquare />,
+      route: "/now-playing",
+    },
+    { title: "Popular", icon: <AiOutlineTeam />, route: "/popular" },
+    { title: "Top Rated", icon: <AiOutlineStar />, route: "/top-rated" },
+    { title: "Upcoming", icon: <AiOutlineClockCircle />, route: "/upcoming" },
   ];
+  const router = useRouter();
 
   return (
     <div className="relative flex">
@@ -25,7 +33,11 @@ export default function DefaultLayout({ children }: IDefaultLayoutProps) {
         id="sidebar"
         className="sticky left-0 top-0 h-screen shadow-md w-auto p-8 cursor-pointer flex flex-col gap-8 shrink-0"
       >
-        <div id="web-title" className="flex gap-2 p-2 items-center">
+        <div
+          id="web-title"
+          className="flex gap-2 p-2 items-center"
+          onClick={() => router.push("/")}
+        >
           <AiOutlineVideoCamera />
           <span>RIZ MOVIE APP</span>
         </div>
@@ -35,6 +47,7 @@ export default function DefaultLayout({ children }: IDefaultLayoutProps) {
             <div
               key={id}
               className="p-2 flex gap-2 items-center hover:bg-purple-600 hover:text-white rounded-md"
+              onClick={() => router.push(item.route)}
             >
               {item?.icon}
               <span>{item.title}</span>

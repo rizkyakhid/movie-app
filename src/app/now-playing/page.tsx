@@ -1,3 +1,5 @@
+import NowPlaying from "@/containers/NowPlaying/NowPlaying";
+
 export default function NowPlayingPage() {
-  return <div>PAGE NOW PLAYING</div>;
+  return <NowPlaying />;
 }

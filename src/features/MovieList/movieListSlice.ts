@@ -6,12 +6,19 @@ interface IMovieList {
 
   movieListData: any;
   movieListLoading: boolean;
+
+  nowPlayingData: any;
+  nowPlayingLoading: boolean;
 }
 
 const initialState: IMovieList = {
   counter: 0,
+
   movieListData: {},
   movieListLoading: true,
+
+  nowPlayingData: {},
+  nowPlayingLoading: true,
 };
 
 export const getMovieListData = createAsyncThunk(
