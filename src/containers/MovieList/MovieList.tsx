@@ -82,7 +82,30 @@ export default function MovieList() {
           onChange={handleSearch}
         />
       </div>
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 px-8">
+      <div
+        className={`grid ${
+          movieListData?.results?.length > 0
+            ? "sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6"
+            : ""
+        } gap-4 px-8`}
+      >
+        {(() => {
+          if (movieListLoading) {
+            Array.from({ length: 20 }).map((_, id) => <CardLoading key={id} />);
+          } else {
+            if (movieListData?.results?.length > 0) {
+              movieListData?.results?.map((item: any, id: number) => (
+                <Card data={item} key={id} />
+              ));
+            } else {
+              return (
+                <div className="flex w-full p-8 items-center justify-center">
+                  <span>MOVIES NOT FOUND</span>
+                </div>
+              );
+            }
+          }
+        })()}
         {movieListLoading
           ? Array.from({ length: 20 }).map((_, id) => <CardLoading key={id} />)
           : movieListData?.results?.map((item: any, id: number) => (
