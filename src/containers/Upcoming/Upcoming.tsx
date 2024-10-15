@@ -6,6 +6,7 @@ import Pagination from "@/components/Pagination/Pagination";
 import { getUpcomingData } from "@/features/Upcoming/upcomingSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Upcoming() {
@@ -14,6 +15,7 @@ export default function Upcoming() {
   );
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(1);
+  const router = useRouter();
 
   const handlePagination = (value: number) => {
     if (value > 0 && value < upcomingData?.total_pages) {
@@ -26,6 +28,10 @@ export default function Upcoming() {
         })
       );
     }
+  };
+
+  const handleDetail = (id: number) => {
+    router.push(`/details?mid=${id}`);
   };
 
   useEffect(() => {
@@ -47,7 +53,12 @@ export default function Upcoming() {
         {upcomingLoading
           ? Array.from({ length: 20 }).map((_, id) => <CardLoading key={id} />)
           : upcomingData?.results?.map((item: any, id: number) => (
-              <Card data={item} key={id} rating />
+              <Card
+                data={item}
+                key={id}
+                rating
+                onClick={() => handleDetail(item?.id)}
+              />
             ))}
       </div>
       <Pagination

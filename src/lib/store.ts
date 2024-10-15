@@ -1,3 +1,4 @@
+import movieDetailsSlice from "@/features/MovieDetails/movieDetailsSlice";
 import movieListSlice from "@/features/MovieList/movieListSlice";
 import nowPlayingSlice from "@/features/NowPlaying/nowPlayingSlice";
 import popularListSlice from "@/features/Popular/popularListSlice";
@@ -13,6 +14,7 @@ export const makeStore = () => {
       topRated: topRatedSlice,
       popularList: popularListSlice,
       upcomingMovie: upcomingSlice,
+      movieDetails: movieDetailsSlice,
     },
   });
 };

@@ -10,6 +10,7 @@ import {
 } from "@/features/MovieList/movieListSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function MovieList() {
@@ -17,6 +18,7 @@ export default function MovieList() {
     (state: RootState) => state.movieList
   );
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const [page, setPage] = useState(1);
   const [searchValue, setSearchValue] = useState("");
 
@@ -64,6 +66,10 @@ export default function MovieList() {
     }
   };
 
+  const handleDetail = (id: number) => {
+    router.push(`/details?mid=${id}`);
+  };
+
   useEffect(() => {
     dispatch(
       getMovieListData({
@@ -91,11 +97,17 @@ export default function MovieList() {
       >
         {(() => {
           if (movieListLoading) {
-            Array.from({ length: 20 }).map((_, id) => <CardLoading key={id} />);
+            return Array.from({ length: 20 }).map((_, id) => (
+              <CardLoading key={id} />
+            ));
           } else {
             if (movieListData?.results?.length > 0) {
-              movieListData?.results?.map((item: any, id: number) => (
-                <Card data={item} key={id} />
+              return movieListData?.results?.map((item: any, id: number) => (
+                <Card
+                  data={item}
+                  key={id}
+                  onClick={() => handleDetail(item?.id)}
+                />
               ));
             } else {
               return (
@@ -106,11 +118,6 @@ export default function MovieList() {
             }
           }
         })()}
-        {movieListLoading
-          ? Array.from({ length: 20 }).map((_, id) => <CardLoading key={id} />)
-          : movieListData?.results?.map((item: any, id: number) => (
-              <Card data={item} key={id} />
-            ))}
       </div>
       <div className="p-8">
         <Pagination

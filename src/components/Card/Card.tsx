@@ -11,11 +11,20 @@ interface ICardProps {
   };
   rating?: boolean;
   popularity?: boolean;
+  onClick?: () => void;
 }
 
-export default function Card({ data, rating, popularity }: ICardProps) {
+export default function Card({
+  data,
+  rating,
+  popularity,
+  onClick = () => null,
+}: ICardProps) {
   return (
-    <div className="shadow-lg rounded-lg p-4 flex flex-col gap-2 w-100 bg-background w-full flex-shrink-0 flex-grow hover:bg-purple-600 cursor-pointer justify-between">
+    <div
+      className="shadow-lg rounded-lg p-4 flex flex-col gap-2 w-100 bg-background w-full flex-shrink-0 flex-grow hover:bg-purple-600 cursor-pointer justify-between"
+      onClick={onClick}
+    >
       <div id="upper-section" className="flex flex-col gap-2">
         <Image
           width={200}

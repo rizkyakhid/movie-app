@@ -6,6 +6,7 @@ import Pagination from "@/components/Pagination/Pagination";
 import { getPopularListData } from "@/features/Popular/popularListSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function PopularList() {
@@ -14,6 +15,7 @@ export default function PopularList() {
   );
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(1);
+  const router = useRouter();
 
   const handlePagination = (value: number) => {
     if (value > 0 && value < popularListData?.total_pages) {
@@ -28,6 +30,10 @@ export default function PopularList() {
     }
   };
 
+  const handleDetail = (id: number) => {
+    router.push(`/details?mid=${id}`);
+  };
+
   useEffect(() => {
     dispatch(
       getPopularListData({
@@ -36,8 +42,6 @@ export default function PopularList() {
       })
     );
   }, []);
-
-  console.log(popularListData, "pldata");
 
   return (
     <div id="container-top-rated" className="p-8 flex flex-col gap-8">
@@ -49,7 +53,12 @@ export default function PopularList() {
         {popularListLoading
           ? Array.from({ length: 20 }).map((_, id) => <CardLoading key={id} />)
           : popularListData?.results?.map((item: any, id: number) => (
-              <Card data={item} key={id} popularity />
+              <Card
+                data={item}
+                key={id}
+                popularity
+                onClick={() => handleDetail(item?.id)}
+              />
             ))}
       </div>
       <Pagination
